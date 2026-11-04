@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Strong Hips">
+<title>Mobile Strong Hips</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2314181D'/%3E%3Crect x='5' y='13' width='7' height='6' fill='%23F2C230'/%3E%3Crect x='13' y='13' width='7' height='6' fill='%23D8433A'/%3E%3Crect x='21' y='13' width='6' height='6' fill='%232C9A58'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one phone-width column. The stretched resistance band, yellow to red to green, is the page's one loud element. */
+:root{
+  --ground:#EDF0F2; --surface:#FBFCFC; --sunken:#E2E7EA; --ink:#14181D; --muted:#515C66; --line:#D3D9DE;
+  --action:#14181D; --action-ink:#FBFCFC; --focus:#2A78D6;
+  --band-yellow:#F2C230; --band-red:#D8433A; --band-green:#2C9A58; --band-review:#3A4652;
+  --climb:#2a78d6; --skate:#eb6834; --mobility:#1baf7a; --physio:#eda100; --rest:#e87ba4;
+  --seq-part:#C4DAF3; --seq-full:#2a78d6; --seq-part-ink:#14181D; --seq-full-ink:#ffffff;
+  --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
+  --grid:#E1E5E8; --tip:#14181D; --tip-ink:#FBFCFC;
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"DM Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ground:#101418; --surface:#191E24; --sunken:#232A31; --ink:#ECEFF2; --muted:#A3ADB7; --line:#2E363E;
+    --action:#ECEFF2; --action-ink:#101418; --focus:#5A9BEA;
+    --band-review:#8996A3;
+    --climb:#3987e5; --skate:#d95926; --mobility:#199e70; --physio:#c98500; --rest:#d55181;
+    --seq-part:#1F3A5C; --seq-full:#3987e5; --seq-part-ink:#ECEFF2; --seq-full-ink:#ffffff;
+    --grid:#262D34; --tip:#ECEFF2; --tip-ink:#101418;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 16px/1.5 var(--body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ground)}
+.wrap{max-width:760px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,p,ul,ol{margin:0}
+h1,h2{font-family:var(--display);font-weight:800;line-height:1.05;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:1.35rem}
+h3{font-size:1rem;font-weight:700}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:.875rem}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ground);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px 4px}
+.brand b{font:800 1.05rem/1.1 var(--display)}
+.status{font:500 .75rem/1 var(--mono);color:var(--muted);white-space:nowrap}
+.status.bad{color:var(--critical)}
+.tabs{display:flex;gap:2px;padding-bottom:8px}
+.tab{flex:1 1 auto;padding:8px 6px;border-radius:6px;color:var(--muted);font-weight:700;font-size:.9375rem;white-space:nowrap;min-height:40px;text-align:center}
+.tab[aria-current="page"]{background:var(--action);color:var(--action-ink)}
+main{padding-block:18px 56px;display:grid;gap:26px}
+main>*{min-width:0}
+section{display:grid;gap:12px;min-width:0}
+.note{padding:10px 12px;border-radius:6px;background:var(--sunken);font-size:.9375rem}
+.note.bad{background:var(--critical);color:#fff}
+.note .btn.quiet{background:var(--surface)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:6px;background:var(--action);color:var(--action-ink);font-weight:700}
+.btn.quiet{background:var(--sunken);color:var(--ink)}
+.btn.danger{background:none;color:var(--critical);box-shadow:inset 0 0 0 1px var(--critical)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}
+
+/* Week hero and the band */
+.hero{display:grid;gap:10px}
+.eyebrow{font:500 .75rem/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-size:clamp(2.6rem,11vw,3.6rem)}
+.hero h1 small{font:600 1rem/1 var(--display);color:var(--muted);letter-spacing:0}
+.arrows{display:flex;gap:4px}
+.arrow{width:44px;height:44px;border-radius:6px;background:var(--sunken);font-weight:700}
+.arrow[disabled]{opacity:.35;cursor:default}
+.phase-tag{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.swatch{width:26px;height:10px;border-radius:2px;background:var(--pc,var(--muted));flex:none}
+[data-phase="p1"]{--pc:var(--band-yellow)} [data-phase="p2"]{--pc:var(--band-red)} [data-phase="p3"]{--pc:var(--band-green)} [data-phase="review"]{--pc:var(--band-review)}
+.band{display:flex;gap:2px;align-items:flex-end}
+.seg{flex:1 1 0;min-width:0;display:grid;gap:4px;justify-items:stretch;font:500 .6875rem/1 var(--mono);color:var(--muted);text-align:center}
+.seg i{display:block;height:24px;background:var(--pc);opacity:.32;border-radius:2px}
+.seg.easy i{height:10px}
+.seg.past i,.seg.now i{opacity:1}
+.seg.view{color:var(--ink);font-weight:500}
+.seg.view i{box-shadow:0 0 0 2px var(--ground),0 0 0 4px var(--ink)}
+.band-key{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8125rem;color:var(--muted)}
+.band-key span{display:inline-flex;align-items:center;gap:6px}
+
+/* Weekly targets */
+.targets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.target{background:var(--surface);border-radius:6px;padding:8px 6px;display:grid;gap:2px;text-align:center}
+.target .lab{font-size:.75rem;color:var(--muted);overflow-wrap:anywhere}
+.target .val{font:500 1.125rem/1.2 var(--mono)}
+.target.met .val::after{content:" ✓";font-size:.875rem}
+[data-cat="climb"]{--c:var(--climb)} [data-cat="skate"]{--c:var(--skate)} [data-cat="mobility"]{--c:var(--mobility)} [data-cat="physio"]{--c:var(--physio)} [data-cat="rest"]{--c:var(--rest)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c,var(--muted));flex:none;display:inline-block}
+.target .dot{justify-self:center}
+
+/* Day list */
+.days{display:grid;gap:2px}
+.day{display:grid;grid-template-columns:64px minmax(0,1fr) 40px;gap:8px;align-items:center;background:var(--surface);padding:8px 8px 8px 10px;min-height:56px}
+.day:first-child{border-radius:8px 8px 0 0}.day:last-child{border-radius:0 0 8px 8px}
+.day.today{background:var(--sunken)}
+.day-d b{display:block;font-weight:700;line-height:1.2}
+.day-d span{font:400 .75rem/1.2 var(--mono);color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--line);font-size:.9375rem;min-height:36px;text-align:left}
+.chip.done{background:var(--action);color:var(--action-ink);box-shadow:none}
+.chip.moved{color:var(--muted)}
+.add{width:36px;height:36px;border-radius:6px;background:var(--sunken);font-weight:700;color:var(--muted)}
+.day.today .add{background:var(--surface)}
+
+/* Session editor */
+.ex{background:var(--surface);border-radius:8px;padding:12px;display:grid;gap:8px;min-width:0}
+.ex.done{box-shadow:inset 0 0 0 2px var(--good)}
+.ex.skipped{opacity:.65}
+.ex h3{font-size:1.0625rem;line-height:1.25}
+.rx{font:500 .875rem/1.35 var(--mono)}
+.how{font-size:.9375rem;color:var(--muted)}
+.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+label.f{display:grid;gap:3px;font-size:.75rem;color:var(--muted);min-width:0}
+input.t,textarea.t,select.t{width:100%;min-height:44px;padding:8px 10px;border-radius:6px;border:1px solid var(--line);background:var(--ground);font-size:1rem;color:var(--ink)}
+textarea.t{min-height:84px;resize:vertical}
+.feel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:6px}
+.feel button{min-height:44px;border-radius:6px;background:var(--sunken);font-weight:700;padding:6px 10px}
+.feel button[aria-pressed="true"]{background:var(--action);color:var(--action-ink)}
+.scale{display:flex;flex-wrap:wrap;gap:4px}
+.scale button{width:40px;height:40px;border-radius:6px;background:var(--sunken);font:500 .9375rem/1 var(--mono)}
+.scale button[aria-pressed="true"]{background:var(--action);color:var(--action-ink)}
+.flag{display:flex;align-items:flex-start;gap:8px;font-size:.9375rem}
+.flag::before{content:"";width:10px;height:10px;border-radius:2px;margin-top:.4em;background:var(--fc);flex:none}
+.flag[data-level="good"]{--fc:var(--good)} .flag[data-level="warning"]{--fc:var(--warning)} .flag[data-level="critical"]{--fc:var(--critical)}
+
+/* Exercises */
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filter{padding:6px 12px;border-radius:6px;background:var(--sunken);white-space:nowrap;min-height:36px;font-size:.9375rem}
+.filter[aria-pressed="true"]{background:var(--action);color:var(--action-ink)}
+.list{display:grid;gap:2px}
+.item{background:var(--surface);min-width:0}
+.item:first-child{border-radius:8px 8px 0 0}.item:last-child{border-radius:0 0 8px 8px}
+.item-h{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:10px;align-items:center;width:100%;padding:10px 12px;text-align:left;min-height:60px}
+.item-h b{display:block;line-height:1.25}
+.item-b{padding:0 12px 14px;display:grid;gap:12px;min-width:0}
+.spark{display:block;width:92px;height:30px}
+.scroll{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;font-size:.875rem}
+th{font-weight:400;color:var(--muted);text-align:left;padding:4px 10px 4px 0;white-space:nowrap}
+td{padding:6px 10px 6px 0;border-top:1px solid var(--grid);vertical-align:top}
+td.n,th.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* Progress */
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.tile{background:var(--surface);border-radius:6px;padding:10px;display:grid;gap:2px}
+.tile .lab{font-size:.8125rem;color:var(--muted)}
+.tile .val{font:600 1.5rem/1.1 var(--display)}
+table.heat{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:2px;font-size:.8125rem}
+.heat th{padding:0;font-size:.8125rem}
+.heat th:first-child{width:62px}
+.heat thead th{padding:0 0 2px;text-align:center;font:400 .6875rem/1 var(--mono)}
+.heat thead th.now{color:var(--ink);font-weight:500}
+.heat td{height:26px;padding:0;border:0;border-radius:3px;background:var(--sunken);text-align:center;font:500 .75rem/26px var(--mono);color:var(--muted)}
+.heat td.part{background:var(--seq-part);color:var(--seq-part-ink)}
+.heat td.met{background:var(--seq-full);color:var(--seq-full-ink)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8125rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:3px;background:var(--sunken)}
+.legend i.part{background:var(--seq-part)} .legend i.met{background:var(--seq-full)}
+.chart{display:block;width:100%;height:auto;overflow:visible}
+.chart text{fill:var(--muted);font:400 11px var(--mono)}
+.chart text.end{fill:var(--ink);font-weight:500}
+.chart .gl{stroke:var(--grid);stroke-width:1}
+.chart .ln{fill:none;stroke:var(--focus);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .ar{fill:var(--focus);opacity:.1}
+.chart .mk{fill:var(--focus);stroke:var(--surface);stroke-width:2}
+.chart .xh{stroke:var(--muted);stroke-width:1;opacity:0}
+.chart .pt:hover .xh,.chart .pt:focus .xh{opacity:1}
+.chart .hit{fill:transparent}
+.chart .pt{outline:none}
+.spark path{fill:none;stroke:var(--focus);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.spark circle{fill:var(--focus)}
+.panel{background:var(--surface);border-radius:8px;padding:12px;display:grid;gap:10px;min-width:0}
+.logrow{display:grid;grid-template-columns:82px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;padding:8px 12px;background:var(--surface);text-align:left;min-height:48px}
+.logrow:first-child{border-radius:8px 8px 0 0}.logrow:last-child{border-radius:0 0 8px 8px}
+
+/* Plan */
+.phases{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.phase{background:var(--surface);border-radius:8px;padding:12px;display:grid;gap:4px;align-content:start}
+.rules{display:grid;gap:18px}
+.rules ul{padding-left:1.1em;display:grid;gap:5px;max-width:65ch}
+.layout td{white-space:normal;min-width:72px}
+.stack{display:flex;flex-wrap:wrap;gap:4px 8px}
+.stack span{display:inline-flex;gap:5px;align-items:center;white-space:nowrap}
+
+/* Sheet and tooltip */
+.sheet{position:fixed;inset:0;z-index:20;background:rgb(0 0 0 / .45);display:grid;align-items:end;justify-items:center}
+.sheet-in{background:var(--ground);width:100%;max-width:520px;border-radius:12px 12px 0 0;padding:16px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:grid;gap:10px}
+.pick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.pick .chip{width:100%;min-height:48px;background:var(--surface);box-shadow:none}
+#tip{position:fixed;z-index:30;max-width:240px;padding:6px 9px;border-radius:6px;background:var(--tip);color:var(--tip-ink);font-size:.8125rem;pointer-events:none}
+#tip b{display:block;font:500 .9375rem/1.25 var(--mono)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><b>Mobile Strong Hips</b><span class="status" id="status" role="status">Connecting</span></div>
+    <nav class="tabs" id="tabs" aria-label="Views">
+      <button type="button" class="tab" data-tab="week">This week</button>
+      <button type="button" class="tab" data-tab="exercises">Exercises</button>
+      <button type="button" class="tab" data-tab="progress">Progress</button>
+      <button type="button" class="tab" data-tab="plan">Plan</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap" id="view"></main>
+<div id="sheet"></div>
+<div id="tip" role="tooltip" hidden></div>
+
+<script>
+(function(){
+'use strict';
+const PLAN = {"name":"Mobile Strong Hips","goal":"Mobile, strong hips, alongside two days of climbing and two days of skating a week, with the physio work keeping shoulders, legs and wrists solid.","start_date":"2026-11-09","phases":{"p1":{"band":"Yellow band","title":"Settle in","weeks":"1–4","focus":"Get every exercise clean at the weights you already use, and find out where your range really is."},"p2":{"band":"Red band","title":"Add load","weeks":"5–8","focus":"More sets and the first load increases. Pauses in the deepest positions start here."},"p3":{"band":"Green band","title":"Own the range","weeks":"9–12","focus":"Fewer reps, slower lowering, and strength at the end of your range."},"review":{"band":"Review","title":"See how far you came","weeks":"13","focus":"Last hip check, compare with week 1, and decide what comes next."}},"weeks":[{"week":1,"phase":"p1","type":"build","effort":6,"note":"Learn the sessions and take your first hip check. Stop each set with 3 or 4 reps left."},{"week":2,"phase":"p1","type":"build","effort":7,"note":"Same loads. Aim for the top of the rep range."},{"week":3,"phase":"p1","type":"build","effort":8,"note":"Same loads. The last set should feel like work, with your form intact."},{"week":4,"phase":"p1","type":"easy","effort":5,"note":"Easy week. One set fewer, two rest days, no new loads."},{"week":5,"phase":"p2","type":"build","effort":6,"note":"Hip check, then the first new loads. Start lighter if you are unsure."},{"week":6,"phase":"p2","type":"build","effort":7,"note":"Settle into the new loads and hold the pauses."},{"week":7,"phase":"p2","type":"build","effort":8,"note":"The hardest week of this phase. Keep the pauses honest."},{"week":8,"phase":"p2","type":"easy","effort":5,"note":"Easy week. Last phase's loads, one set fewer, two rest days."},{"week":9,"phase":"p3","type":"build","effort":6,"note":"Hip check, then fewer reps and slower lowering."},{"week":10,"phase":"p3","type":"build","effort":7,"note":"Press into the floor during long holds. That is where end-range strength comes from."},{"week":11,"phase":"p3","type":"build","effort":8,"note":"The hardest week of the plan. Stop any set where the form goes."},{"week":12,"phase":"p3","type":"easy","effort":5,"note":"Easy week. Last phase's loads, one set fewer, two rest days."},{"week":13,"phase":"review","type":"review","effort":6,"note":"Final hip check and an easy-to-moderate week. Compare with week 1 and choose what comes next."}],"targets":{"build":{"climb":2,"skate":2,"mobility":3,"physio":2,"rest":1},"review":{"climb":2,"skate":2,"mobility":3,"physio":2,"rest":1},"two_rest":{"climb":2,"skate":2,"mobility":2,"physio":2,"rest":2},"easy":{"climb":2,"skate":1,"mobility":2,"physio":2,"rest":2}},"layouts":{"standard":{"label":"Standard week","days":{"Mon":["climb"],"Tue":["physA","mobA"],"Wed":["skate","mobC"],"Thu":["climb"],"Fri":["physB","mobB"],"Sat":["skate"],"Sun":["rest"]}},"two_rest":{"label":"Two rest days","days":{"Mon":["climb"],"Tue":["physA","mobA"],"Wed":["rest"],"Thu":["climb"],"Fri":["skate","physB"],"Sat":["rest"],"Sun":["skate","mobB"]}},"easy":{"label":"Easy week","days":{"Mon":["climb"],"Tue":["physA","mobC"],"Wed":["rest"],"Thu":["climb"],"Fri":["physB","mobB"],"Sat":["skate"],"Sun":["rest"]}}},"sessions":{"climb":{"category":"climb","title":"Climb","subtitle":"Your session, your way","minutes":null,"cues":{"p1":"Climb as normal. On one route each session, focus on turning your hips in to the wall.","p2":"Practise high steps and drop knees on easy routes.","p3":"Pick climbs that need wide stems or heel hooks, and use the new range.","easy":"Easy grades. Stop before your forearms get pumped.","review":"Go back to a climb that felt out of range in week 1."}},"skate":{"category":"skate","title":"Skate","subtitle":"Your session, your way","minutes":null,"cues":{"p1":"Skate as normal. Warm up your ankles and wrists first.","p2":"Sink lower through your hips and knees, and notice your inner thighs working.","p3":"Use the range: deeper crouches and a wider stance where it helps.","easy":"Short and playful. Nothing new that could mean a big fall.","review":"Notice what feels different in your stance since week 1."}},"rest":{"category":"rest","title":"Full rest","subtitle":"No climbing, skating, mobility or physio","minutes":null,"cues":{"p1":"Slow walks, sleep and good food are all fine. Logging the day counts as doing it.","p2":"Slow walks, sleep and good food are all fine. Logging the day counts as doing it.","p3":"Slow walks, sleep and good food are all fine. Logging the day counts as doing it.","easy":"Slow walks, sleep and good food are all fine. Logging the day counts as doing it.","review":"Slow walks, sleep and good food are all fine. Logging the day counts as doing it."}},"mobA":{"category":"mobility","title":"Mobility A","subtitle":"Squat flow and adductor strength","minutes":25,"exercises":[{"id":"sq_knee_taps"},{"id":"sq_side"},{"id":"cossack"},{"id":"horse"},{"id":"copenhagen"}]},"mobB":{"category":"mobility","title":"Mobility B","subtitle":"Half-kneel rocks and leg lifts","minutes":30,"exercises":[{"id":"sq_twist"},{"id":"hk_circles"},{"id":"hk_rocks"},{"id":"hk_rockbacks"},{"id":"butterfly"},{"id":"side_kicks"},{"id":"copenhagen","phases":["p2","p3"]}]},"mobC":{"category":"mobility","title":"Mobility C","subtitle":"Long holds, kept easy","minutes":20,"exercises":[{"id":"sq_fold"},{"id":"sq_thrust"},{"id":"frog"},{"id":"hip_9090"},{"id":"split_pancake"}]},"physA":{"category":"physio","title":"Physio A","subtitle":"Squat, bridge, pull, press and wrists","minutes":30,"exercises":[{"id":"goblet_squat"},{"id":"banded_bridge"},{"id":"db_row"},{"id":"curl_press"},{"id":"bent_knee_calf"},{"id":"long_lever_ext"},{"id":"wrist_flexion"},{"id":"finger_band"},{"id":"flexibar"}]},"physB":{"category":"physio","title":"Physio B","subtitle":"Single-leg work, lat pull and wrists","minutes":35,"exercises":[{"id":"split_squat"},{"id":"single_leg_bridge"},{"id":"clamshell"},{"id":"lat_pulldown"},{"id":"frontal_raise"},{"id":"single_leg_calf"},{"id":"long_lever_ext"},{"id":"wrist_flexion"},{"id":"finger_band"},{"id":"flexibar"}]}},"groups":{"hip":"Hip mobility","adductor":"Adductor strength","upper":"Upper body strength","lower":"Lower body strength","wrist":"Wrist strength"},"exercises":{"sq_knee_taps":{"name":"Deep squat knee taps","group":"hip","load_type":"none","unit":"reps","per":"each side","how":"Sit in a deep squat, heels down if you can. Let one knee fall in toward the floor, come back, then the other.","rx":{"p1":{"sets":2,"reps":[8]},"p2":{"sets":3,"reps":[8],"add":"2 s pause each rep"},"p3":{"sets":3,"reps":[10],"add":"3 s pause each rep"}}},"sq_twist":{"name":"Deep squat with thoracic twist","group":"hip","load_type":"none","unit":"reps","per":"each side","how":"Hold the deep squat with one hand on the floor. Reach the other arm to the ceiling and follow it with your eyes.","rx":{"p1":{"sets":2,"reps":[6]},"p2":{"sets":3,"reps":[6],"add":"2 s pause at the top"},"p3":{"sets":3,"reps":[8],"add":"3 s pause at the top"}}},"sq_side":{"name":"Deep squat side to side, push knee out","group":"hip","load_type":"none","unit":"reps","per":"each side","how":"Shift your weight onto one foot at the bottom of the squat and press that knee out. Slide across to the other side.","rx":{"p1":{"sets":2,"reps":[8]},"p2":{"sets":3,"reps":[8],"add":"2 s pause each side"},"p3":{"sets":3,"reps":[10],"add":"3 s pause each side"}}},"sq_thrust":{"name":"Deep squat to knee to hip thrust","group":"hip","load_type":"none","unit":"reps","per":null,"how":"From the bottom of the squat, lower onto your knees and drive your hips forward until they are fully open. Return to the squat.","rx":{"p1":{"sets":2,"reps":[6]},"p2":{"sets":3,"reps":[6]},"p3":{"sets":3,"reps":[8],"add":"2 s squeeze at the top"}}},"sq_fold":{"name":"Deep squat to forward fold","group":"hip","load_type":"none","unit":"reps","per":null,"how":"From the bottom of the squat, hold your toes and lift your hips to straighten your legs as far as stays easy. Sink back down.","rx":{"p1":{"sets":2,"reps":[6]},"p2":{"sets":3,"reps":[6]},"p3":{"sets":3,"reps":[8],"add":"slow both ways"}}},"hk_circles":{"name":"Half kneel adductor circling rocks","group":"hip","load_type":"none","unit":"reps","per":"each direction, each side","how":"One knee down, the other leg out to the side. Circle your hips in a slow, wide ring.","rx":{"p1":{"sets":2,"reps":[6]},"p2":{"sets":3,"reps":[6]},"p3":{"sets":3,"reps":[8]}}},"hk_rocks":{"name":"Half kneel adductor rocks: 45, 90, 135 deg, max","group":"hip","load_type":"kg","unit":"reps","per":"each angle, each side","baseline":{"kg":6},"how":"Same half kneel. Set the side leg at each position in turn and rock back and forward with the weight.","rx":{"p1":{"sets":2,"reps":[5],"kg":6},"p2":{"sets":2,"reps":[6],"kg":6,"add":"2 s pause at the end of each rock"},"p3":{"sets":2,"reps":[6],"kg":8,"add":"2 s pause at the end of each rock"}}},"hk_rockbacks":{"name":"Half kneel adductor rock backs with arched back","group":"hip","load_type":"none","unit":"reps","per":"each side","how":"Keep your lower back long and arched as your hips rock back. Stop when it starts to round.","rx":{"p1":{"sets":2,"reps":[8]},"p2":{"sets":3,"reps":[8]},"p3":{"sets":3,"reps":[8],"add":"3 s pause at the back"}}},"frog":{"name":"Frog pose with cat-cow, frog pose with internal rotation foot up","group":"hip","load_type":"none","unit":"reps","per":"each move","how":"Knees wide on the floor. Move through cat-cow, then rotate one hip inward to lift that foot up, and lower it with control.","rx":{"p1":{"sets":2,"reps":[6]},"p2":{"sets":2,"reps":[8]},"p3":{"sets":3,"reps":[8]}}},"hip_9090":{"name":"90 90 hip stretch","group":"hip","load_type":"none","unit":"s","per":"each side","how":"Front and back shins both bent to 90 degrees. Sit tall and hinge forward over the front shin.","rx":{"p1":{"sets":2,"reps":[45]},"p2":{"sets":2,"reps":[60]},"p3":{"sets":2,"reps":[60],"add":"press your shins into the floor, 3 × 5 s in each hold"}}},"split_pancake":{"name":"Middle split + pancake stretch","group":"hip","load_type":"none","unit":"s","per":"each position","how":"Legs wide. Sit at the edge of your middle split, then fold forward from the hips with a long back for the pancake.","rx":{"p1":{"sets":2,"reps":[45]},"p2":{"sets":3,"reps":[45]},"p3":{"sets":3,"reps":[60],"add":"press your legs into the floor, 3 × 5 s in each hold"}}},"copenhagen":{"name":"Copenhagen plank","group":"adductor","load_type":"none","unit":"s","per":"each side","baseline":{"sets":3,"reps":30},"how":"Top leg on a bench, lift your hips into a side plank. Keep to the leg position you have been using.","rx":{"p1":{"sets":3,"reps":[30]},"p2":{"sets":3,"reps":[35]},"p3":{"sets":3,"reps":[40]}}},"cossack":{"name":"Cossack squat with knee drop","group":"adductor","load_type":"kg","unit":"reps","per":"each side","how":"Wide stance. Sink onto one leg with the other straight and toes up, let the bent knee drop in at the bottom, and drive back up.","rx":{"p1":{"sets":2,"reps":[6]},"p2":{"sets":3,"reps":[6]},"p3":{"sets":3,"reps":[8],"kg":6,"add":"hold the weight at your chest"}}},"horse":{"name":"Horse stance","group":"adductor","load_type":"none","unit":"s","per":null,"baseline":{"sets":3,"reps":30},"how":"Feet wide, toes turned out, thighs sinking toward parallel, chest up. Hold.","rx":{"p1":{"sets":3,"reps":[30]},"p2":{"sets":3,"reps":[40]},"p3":{"sets":3,"reps":[50]}}},"butterfly":{"name":"Butterfly pose with weighted lifts","group":"adductor","load_type":"kg","unit":"reps","per":null,"how":"Soles of the feet together with the weight in place. Lift against it and lower slowly.","rx":{"p1":{"sets":2,"reps":[10],"add":"the weight you have been using"},"p2":{"sets":3,"reps":[10],"add":"the weight you have been using"},"p3":{"sets":3,"reps":[12],"add":"next weight up if it has felt easy"}}},"side_kicks":{"name":"Straight leg side kicks","group":"adductor","load_type":"none","unit":"reps","per":"each side","how":"Keep the leg straight, lift it out to the side with control and lower it slowly. No leaning.","rx":{"p1":{"sets":2,"reps":[10]},"p2":{"sets":3,"reps":[10]},"p3":{"sets":3,"reps":[12],"add":"2 s hold at the top"}}},"lat_pulldown":{"name":"Banded single arm lat pulldown","group":"upper","load_type":"band","unit":"reps","per":"each side","how":"Band anchored high. Pull your elbow down to your ribs and keep your shoulder away from your ear.","rx":{"p1":{"sets":3,"reps":[12],"band":"Current band"},"p2":{"sets":3,"reps":[12],"band":"Current band","add":"2 s squeeze at the bottom"},"p3":{"sets":3,"reps":[10],"band":"Next band up"}}},"curl_press":{"name":"Bicep curl to overhead press","group":"upper","load_type":"kg","unit":"reps","per":null,"baseline":{"kg":6},"how":"Curl, then press overhead in one movement. Keep your ribs down.","rx":{"p1":{"sets":3,"reps":[8,10],"kg":6},"p2":{"sets":3,"reps":[10,12],"kg":6},"p3":{"sets":3,"reps":[8],"kg":8}}},"frontal_raise":{"name":"Frontal raise with dumbbell","group":"upper","load_type":"kg","unit":"reps","per":null,"baseline":{"kg":6},"how":"Raise to shoulder height with no swing, then lower for 2 to 3 seconds.","rx":{"p1":{"sets":3,"reps":[8,10],"kg":6},"p2":{"sets":3,"reps":[10,12],"kg":6},"p3":{"sets":3,"reps":[10,12],"kg":6,"add":"3 s lowering"}}},"db_row":{"name":"Single arm dumbbell row","group":"upper","load_type":"kg","unit":"reps","per":"each side","baseline":{"kg":6},"how":"Hand on a bench. Pull your elbow toward your hip, squeeze the shoulder blade and lower slowly.","rx":{"p1":{"sets":3,"reps":[10,12],"kg":6},"p2":{"sets":3,"reps":[10],"kg":8},"p3":{"sets":3,"reps":[8,10],"kg":10}}},"goblet_squat":{"name":"Goblet squat with weights","group":"lower","load_type":"kg","unit":"reps","per":null,"baseline":{"kg":12},"how":"Hold the weight at your chest. Squat to a depth you control, knees tracking over your toes.","rx":{"p1":{"sets":3,"reps":[10,12],"kg":12},"p2":{"sets":3,"reps":[8,10],"kg":14},"p3":{"sets":4,"reps":[6,8],"kg":16,"add":"3 s lowering"}}},"single_leg_bridge":{"name":"Bridge single leg","group":"lower","load_type":"none","unit":"reps","per":"each side","how":"One foot down, lift your hips and keep them level. No twisting.","rx":{"p1":{"sets":3,"reps":[8,10]},"p2":{"sets":3,"reps":[10,12]},"p3":{"sets":3,"reps":[10],"add":"3 s hold at the top"}}},"banded_bridge":{"name":"Banded glute bridge with weight","group":"lower","load_type":"kg","unit":"reps","per":null,"baseline":{"kg":12},"how":"Band above your knees and the weight on your hips. Press your knees out, drive up, hold for a second.","rx":{"p1":{"sets":3,"reps":[12],"kg":12},"p2":{"sets":3,"reps":[10],"kg":16},"p3":{"sets":3,"reps":[8,10],"kg":20}}},"split_squat":{"name":"Split squat","group":"lower","load_type":"kg","unit":"reps","per":"each side","baseline":{"kg":6},"how":"Staggered stance. Drop your back knee straight down and drive up through the front foot.","rx":{"p1":{"sets":3,"reps":[8,10],"kg":6},"p2":{"sets":3,"reps":[8,10],"kg":8},"p3":{"sets":3,"reps":[6,8],"kg":10,"add":"3 s lowering"}}},"clamshell":{"name":"Resisted clam shell","group":"lower","load_type":"band","unit":"reps","per":"each side","baseline":{"band":"Yellow"},"how":"Lie on your side with the band above your knees. Lift the top knee without rolling back.","rx":{"p1":{"sets":3,"reps":[15],"band":"Yellow"},"p2":{"sets":3,"reps":[12],"band":"Red"},"p3":{"sets":3,"reps":[15],"band":"Red","add":"2 s hold at the top"}}},"bent_knee_calf":{"name":"Bent knee calf raise","group":"lower","load_type":"kg","unit":"reps","per":null,"baseline":{"kg":6},"how":"Keep your knees bent. Rise as high as you can and lower slowly.","rx":{"p1":{"sets":3,"reps":[12],"kg":6},"p2":{"sets":3,"reps":[12],"kg":8},"p3":{"sets":3,"reps":[10],"kg":10,"add":"3 s lowering"}}},"single_leg_calf":{"name":"Single leg calf raises with weight","group":"lower","load_type":"kg","unit":"reps","per":"each side","baseline":{"kg":6},"how":"Full height, a 1 second pause, then 2 to 3 seconds down. Fingertips on a wall for balance.","rx":{"p1":{"sets":3,"reps":[10],"kg":6},"p2":{"sets":3,"reps":[12],"kg":6},"p3":{"sets":3,"reps":[10],"kg":8,"add":"3 s lowering"}}},"long_lever_ext":{"name":"Long lever wrist extension","group":"wrist","load_type":"kg","unit":"reps","per":"each side","baseline":{"kg":2},"how":"Do this the way your physio showed you. Lift with the wrist only and lower slowly.","rx":{"p1":{"sets":3,"reps":[12],"kg":2},"p2":{"sets":3,"reps":[15],"kg":2,"add":"3 s lowering"},"p3":{"sets":3,"reps":[10],"kg":3,"add":"3 s lowering"}}},"wrist_flexion":{"name":"Wrist flexion","group":"wrist","load_type":"kg","unit":"reps","per":"each side","baseline":{"kg":6},"how":"Forearm supported, palm up. Curl the wrist up and lower slowly.","rx":{"p1":{"sets":3,"reps":[12],"kg":6},"p2":{"sets":3,"reps":[15],"kg":6,"add":"3 s lowering"},"p3":{"sets":3,"reps":[10],"kg":8,"add":"3 s lowering"}}},"finger_band":{"name":"Finger resistance rubber band","group":"wrist","load_type":"band","unit":"reps","per":"each side","how":"Band around your fingers. Open them against it and close slowly.","rx":{"p1":{"sets":2,"reps":[20],"band":"Current band"},"p2":{"sets":3,"reps":[20],"band":"Current band"},"p3":{"sets":3,"reps":[25],"band":"Thicker band if you have one"}}},"flexibar":{"name":"Flexibar exercise","group":"wrist","load_type":"none","unit":"s","per":null,"how":"Keep the bar moving with small, quick pushes. Shoulders stay down.","rx":{"p1":{"sets":3,"reps":[20]},"p2":{"sets":3,"reps":[30]},"p3":{"sets":3,"reps":[40]}}}},"hip_checks":{"due_weeks":[1,5,9,13],"note":"Take these fresh, after a warm-up, at the start of the week. Higher is better on all six.","measures":[{"id":"squat_hold","name":"Deep squat hold","unit":"s","how":"Heels down if you can. Time how long it stays comfortable, up to 2 minutes."},{"id":"switches","name":"90 90 switches, no hands","unit":"in 30 s","how":"Rotate from one side to the other without touching the floor with your hands. Count clean switches."},{"id":"split_width","name":"Middle split width","unit":"cm","how":"Measure heel to heel at the edge of your comfortable range."},{"id":"pancake_reach","name":"Pancake reach","unit":"cm","how":"Measure fingertips past the line of your heels. Short of the line counts as a negative number."},{"id":"copenhagen_hold","name":"Copenhagen hold","unit":"s","how":"Longest clean hold on your weaker side."},{"id":"horse_hold","name":"Horse stance hold","unit":"s","how":"Longest clean hold with your thighs at your usual depth."}]},"rules":{"flexible":{"title":"Flexible by design","items":["Targets are for the week, not the day. Move any session to any day.","The weekly layouts are suggestions. Stacked sessions can be split across the morning and evening.","Missed a session? Let it go. Never double up later in the week to make up for it.","When a week falls apart, keep the rest day first, then one physio session, then one mobility session. Climb and skate if you feel like it.","Need more time? Repeat a week. Holidays, illness or a rough patch just move the calendar along."]},"rest":{"title":"Rest days","items":["Every week has at least one full rest day, and easy weeks have two.","A full rest day means no climbing, skating, mobility or physio. Slow walks, sleep and good food are fine.","Want a second rest day in a normal week? Take it. Use the Two rest days layout, which drops Mobility C.","Tired or sore? Swap any session for rest, any time. That is the plan working."]},"spacing":{"title":"Spacing","items":["Leave at least a day between the two physio sessions.","Wrist and finger work goes after climbing or on a non-climbing day, never just before climbing.","Long hip holds go after sport or on their own. Short squat drills make a fine warm-up.","Don't climb hard and skate hard on the same day.","After a hard fall on a wrist or hip, leave that area alone until it has settled, and check with your physio."]},"progress":{"title":"When to go up","items":["The plan suggests a load for each phase. Your body decides whether you take it.","Felt easy two sessions in a row, with pain at 3 or under? Go up a step, even early.","Felt hard two sessions in a row? Stay where you are or go back a step, even if the plan says up.","Use the smallest jump you have.","No heavier weight at home? Keep the weight and make it harder: 3 s lowering, a pause, or 2 more reps.","Range comes before load. Only add weight where you control the whole movement."]}},"pain_guide":[{"max":3,"level":"good","label":"Carry on","text":"0 to 3 is fine. Keep going."},{"max":5,"level":"warning","label":"Hold","text":"4 or 5: stay at this load, shorten the range and make a note of it."},{"max":10,"level":"critical","label":"Stop","text":"6 or more: stop that exercise and drop back a step next time. Tell your physio if it is sharp, numb, swollen or worse the next morning."}],"physio_note":"Your physio's advice beats anything on this page. The progressions here are general and were written without knowing why each physio exercise was prescribed, so show them to your physio before weeks 5 and 9, when the loads go up."};
+const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const CATS = [['climb','Climb'],['skate','Skate'],['mobility','Mobility'],['physio','Physio'],['rest','Rest']];
+const MS = 86400000;
+const $ = (s, r=document) => r.querySelector(s);
+const view = $('#view');
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clone = o => JSON.parse(JSON.stringify(o));
+const pad = n => String(n).padStart(2,'0');
+const toNum = v => { const n = parseFloat(String(v ?? '').replace(',', '.')); return isFinite(n) ? n : null; };
+
+/* ---------- dates: whole days since the epoch, so time zones can't shift a week ---------- */
+const toDay = iso => { const [y,m,d] = iso.split('-').map(Number); return Date.UTC(y,m-1,d) / MS; };
+const fromDay = n => new Date(n*MS).toISOString().slice(0,10);
+const todayISO = () => { const d = new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); };
+const fmt = (iso, o) => new Date(toDay(iso)*MS).toLocaleDateString(undefined, Object.assign({timeZone:'UTC'}, o));
+const shortDate = iso => fmt(iso, {day:'numeric', month:'short'});
+const dayName = iso => DAYS[(new Date(toDay(iso)*MS).getUTCDay()+6)%7];
+
+/* ---------- state ---------- */
+const S = {
+  noStorage:false, lastBackup:null, restore:null,
+  settings:{startDate:PLAN.start_date, repeats:{}, layouts:{}},
+  logs:[], checks:[], seq:[],
+  tab:'week', viewI:null, edit:null, picker:null, check:null,
+  filter:'all', openEx:null, stale:false,
+};
+
+/* The calendar is the 13 plan weeks with any repeated weeks inserted, so a repeat
+   moves everything after it along without touching what was already logged. */
+function buildSeq(){
+  const out = [];
+  PLAN.weeks.forEach(w => {
+    const n = 1 + ((S.settings.repeats||{})[w.week] || 0);
+    for (let r = 0; r < n; r++) out.push(Object.assign({}, w, {repeat:r}));
+  });
+  S.seq = out;
+}
+const weekIndex = iso => Math.floor((toDay(iso) - toDay(S.settings.startDate)) / 7);
+const curIndex = () => Math.min(S.seq.length-1, Math.max(0, weekIndex(todayISO())));
+const viewIndex = () => Math.min(S.seq.length-1, S.viewI ?? curIndex());
+const weekStart = i => fromDay(toDay(S.settings.startDate) + i*7);
+const phaseKey = i => S.seq[i].phase === 'review' ? 'p3' : S.seq[i].phase;
+const cueKey = i => S.seq[i].type === 'easy' ? 'easy' : S.seq[i].phase;
+function layoutKey(i){
+  if (S.seq[i].type === 'easy') return 'easy';
+  return (S.settings.layouts||{})[i] === 'two_rest' ? 'two_rest' : 'standard';
+}
+function targetsFor(i){
+  const w = S.seq[i];
+  if (w.type === 'easy') return PLAN.targets.easy;
+  return layoutKey(i) === 'two_rest' ? PLAN.targets.two_rest : PLAN.targets[w.type];
+}
+function exercisesIn(key, i){
+  return (PLAN.sessions[key].exercises || []).filter(s => !s.phases || s.phases.includes(phaseKey(i))).map(s => s.id);
+}
+
+/* ---------- prescriptions ---------- */
+function rxFor(id, i){
+  const ex = PLAN.exercises[id], w = S.seq[i];
+  if (w.type === 'build') return Object.assign({}, ex.rx[w.phase]);
+  const r = Object.assign({}, ex.rx[phaseKey(i)]);
+  r.sets = Math.max(2, r.sets - 1);
+  const prev = {p2:'p1', p3:'p2'}[w.phase];
+  if (w.type === 'easy' && prev){
+    const p = ex.rx[prev];
+    if ('kg' in p) r.kg = p.kg; else delete r.kg;
+    if ('band' in p) r.band = p.band;
+  }
+  return r;
+}
+const repsText = (r, ex) => r.reps.join('–') + (ex.unit === 's' ? ' s' : '');
+function rxText(r, ex){
+  const parts = [r.sets+' × '+repsText(r, ex)+(ex.per ? ' '+ex.per : '')];
+  if (r.kg != null) parts.push(r.kg+' kg');
+  if (r.band) parts.push(r.band.toLowerCase().includes('band') ? r.band : r.band+' band');
+  return parts.join(' · ') + (r.add ? ' · '+r.add : '');
+}
+const defaultLoad = r => r.kg ?? r.band ?? '';
+
+/* ---------- reading the log ---------- */
+function isDone(log){
+  const cat = PLAN.sessions[log.session] && PLAN.sessions[log.session].category;
+  if (cat === 'mobility' || cat === 'physio') return Object.values(log.ex||{}).some(e => e.done);
+  return !!cat;
+}
+const logsInWeek = i => S.logs.filter(l => weekIndex(l.date) === i && isDone(l));
+function countsFor(i){
+  const c = {climb:0, skate:0, mobility:0, physio:0, rest:0};
+  logsInWeek(i).forEach(l => { c[PLAN.sessions[l.session].category]++; });
+  return c;
+}
+function history(id){
+  return S.logs.filter(l => l.ex && l.ex[id] && l.ex[id].done)
+    .map(l => Object.assign({date:l.date, session:l.session, pain:l.pain}, l.ex[id]))
+    .sort((a,b) => a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+}
+function stepStatus(id){
+  const h = history(id).slice(-2);
+  if (h.length < 2) return null;
+  if (h.every(x => x.feel === 'easy' && (x.pain == null || x.pain <= 3))) return 'up';
+  if (h.every(x => x.feel === 'hard')) return 'down';
+  return null;
+}
+const STEP_TEXT = {
+  up: ['good', 'Felt easy twice. Try the next step up.'],
+  down: ['warning', 'Felt hard twice. Stay here or go back a step.'],
+};
+/* What the chart for an exercise plots: load if it has one, otherwise hold time or total reps. */
+function metricOf(id){
+  const ex = PLAN.exercises[id], h = history(id);
+  if (ex.load_type === 'kg' && (ex.baseline?.kg != null || h.some(x => toNum(x.load) != null))) return {key:'kg', label:'Load', unit:'kg'};
+  if (ex.unit === 's') return {key:'s', label:'Hold', unit:'s'};
+  return {key:'total', label:'Total reps', unit:'reps'};
+}
+function metricValue(x, m){
+  if (m.key === 'kg') return toNum(x.load);
+  if (m.key === 's') return toNum(x.reps);
+  const s = toNum(x.sets), r = toNum(x.reps);
+  return s != null && r != null ? s*r : null;
+}
+function seriesFor(id){
+  const m = metricOf(id), ex = PLAN.exercises[id], pts = [];
+  history(id).forEach(x => { const y = metricValue(x, m); if (y != null) pts.push({x:x.date, y}); });
+  let base = null;
+  if (m.key === 'kg' && ex.baseline?.kg != null) base = ex.baseline.kg;
+  if (m.key === 's' && ex.baseline?.reps != null) base = ex.baseline.reps;
+  return {m, pts, base};
+}
+function baselineText(ex){
+  const b = ex.baseline; if (!b) return null;
+  if (b.kg != null) return b.kg+' kg';
+  if (b.band) return b.band+' band';
+  if (b.reps != null) return b.sets+' × '+b.reps+(ex.unit === 's' ? ' s' : '');
+  return null;
+}
+
+/* ---------- saving: everything lives in this browser, under one key ---------- */
+const KEY = 'mobile-strong-hips-v1';
+const byDateDesc = (a,b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+function setStatus(text, bad){ const el = $('#status'); el.textContent = text; el.className = 'status'+(bad ? ' bad' : ''); }
+function persist(){
+  try {
+    localStorage.setItem(KEY, JSON.stringify({version:1, settings:S.settings, logs:S.logs, checks:S.checks, lastBackup:S.lastBackup}));
+    S.noStorage = false; setStatus('Saved');
+  } catch (_){ S.noStorage = true; setStatus('Not saved', true); }
+}
+function applyData(d){
+  S.settings = Object.assign({startDate:PLAN.start_date, repeats:{}, layouts:{}}, d.settings);
+  S.logs = (d.logs || []).slice().sort(byDateDesc);
+  S.checks = (d.checks || []).slice().sort((a,b) => byDateDesc(b,a));
+  S.lastBackup = d.lastBackup || null;
+  buildSeq();
+}
+function loadSaved(){
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) applyData(JSON.parse(raw));
+    setStatus(raw ? 'Saved' : 'Nothing logged yet');
+  } catch (_){ S.noStorage = true; setStatus('Not saved', true); }
+}
+function saveLog(){
+  const doc = clone(S.edit.doc); doc.id = S.edit.id;
+  const at = S.logs.findIndex(l => l.id === doc.id);
+  if (at < 0) S.logs.push(doc); else S.logs[at] = doc;
+  S.logs.sort(byDateDesc);
+  persist();
+}
+function saveSettings(){ buildSeq(); persist(); render(); }
+
+/* The log exists only in this browser, so a backup file is the one way to protect it or move it. */
+function downloadBackup(){
+  const body = JSON.stringify({app:'mobile-strong-hips', version:1, exported:new Date().toISOString(), settings:S.settings, logs:S.logs, checks:S.checks}, null, 1);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([body], {type:'application/json'}));
+  a.download = 'mobile-strong-hips-backup-'+todayISO()+'.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  S.lastBackup = todayISO(); persist(); render();
+}
+function readBackup(file){
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const d = JSON.parse(r.result);
+      if (d.app !== 'mobile-strong-hips' || !Array.isArray(d.logs) || !Array.isArray(d.checks)) throw new Error('wrong file');
+      S.restore = {data:d, error:null};
+    } catch (_){ S.restore = {data:null, error:'That file is not a Mobile Strong Hips backup.'}; }
+    render();
+  };
+  r.readAsText(file);
+}
+const backupDue = () => S.logs.length > 0 && (!S.lastBackup || toDay(todayISO()) - toDay(S.lastBackup) >= 14);
+
+/* ---------- charts ---------- */
+function niceTicks(lo, hi){
+  if (lo === hi){ lo -= 1; hi += 1; }
+  const raw = (hi-lo)/3, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1,2,2.5,5,10].map(m => m*mag).find(s => s >= raw);
+  const out = [];
+  for (let v = Math.floor(lo/step)*step; v < hi + step*0.999; v += step) out.push(Math.round(v*100)/100);
+  return out;
+}
+const chartWidth = () => Math.max(260, Math.min(700, view.clientWidth - 56));
+function lineChart(pts, o){
+  const W = chartWidth(), H = o.h || 170, m = {t:12, r:46, b:22, l:34};
+  const xs = pts.map(p => toDay(p.x)); let x0 = Math.min(...xs), x1 = Math.max(...xs);
+  if (x0 === x1){ x0 -= 3; x1 += 3; }
+  const ys = pts.map(p => p.y).concat(o.base != null ? [o.base] : []);
+  const ticks = niceTicks(o.yMin ?? Math.min(...ys), o.yMax ?? Math.max(...ys));
+  const lo = ticks[0], hi = ticks[ticks.length-1];
+  const X = d => m.l + (d-x0)/(x1-x0)*(W-m.l-m.r);
+  const Y = v => m.t + (1-(v-lo)/(hi-lo))*(H-m.t-m.b);
+  let s = '<svg class="chart" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="'+esc(o.title)+'">';
+  ticks.forEach(t => { s += '<line class="gl" x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(m.l-6)+'" y="'+(Y(t)+4)+'" text-anchor="end">'+t+'</text>'; });
+  const first = pts[0], last = pts[pts.length-1];
+  s += '<text x="'+m.l+'" y="'+(H-5)+'">'+esc(shortDate(first.x))+'</text>';
+  if (pts.length > 1) s += '<text x="'+(W-m.r)+'" y="'+(H-5)+'" text-anchor="end">'+esc(shortDate(last.x))+'</text>';
+  const line = pts.map((p,i) => (i?'L':'M')+X(toDay(p.x))+' '+Y(p.y)).join('');
+  if (pts.length > 1){
+    s += '<path class="ar" d="'+line+'L'+X(toDay(last.x))+' '+Y(lo)+'L'+X(toDay(first.x))+' '+Y(lo)+'Z"/><path class="ln" d="'+line+'"/>';
+  }
+  pts.forEach((p,i) => {
+    const px = X(toDay(p.x)), prev = i ? X(toDay(pts[i-1].x)) : m.l, next = i < pts.length-1 ? X(toDay(pts[i+1].x)) : W-m.r;
+    const a = i ? (px+prev)/2 : m.l, b = i < pts.length-1 ? (px+next)/2 : W-m.r;
+    s += '<g class="pt" tabindex="0" data-tip="'+esc(p.y+' '+o.unit)+'" data-sub="'+esc(shortDate(p.x))+'"><rect class="hit" x="'+a+'" y="'+m.t+'" width="'+Math.max(24,b-a)+'" height="'+(H-m.t-m.b)+'"/><line class="xh" x1="'+px+'" x2="'+px+'" y1="'+m.t+'" y2="'+(H-m.b)+'"/></g>';
+  });
+  s += '<circle class="mk" cx="'+X(toDay(last.x))+'" cy="'+Y(last.y)+'" r="5"/>';
+  s += '<text class="end" x="'+(X(toDay(last.x))+9)+'" y="'+(Y(last.y)+4)+'">'+last.y+'</text></svg>';
+  return s;
+}
+function sparkline(vals){
+  if (vals.length < 2) return '';
+  const W = 92, H = 30, p = 4, lo = Math.min(...vals), hi = Math.max(...vals), span = hi-lo || 1;
+  const X = i => p + i/(vals.length-1)*(W-2*p), Y = v => hi === lo ? H/2 : H-p-(v-lo)/span*(H-2*p);
+  const d = vals.map((v,i) => (i?'L':'M')+X(i)+' '+Y(v)).join('');
+  return '<svg class="spark" viewBox="0 0 '+W+' '+H+'" aria-hidden="true"><path d="'+d+'"/><circle cx="'+X(vals.length-1)+'" cy="'+Y(vals[vals.length-1])+'" r="3"/></svg>';
+}
+
+/* ---------- shared pieces ---------- */
+const sessionChip = (key, cls, sub, attrs) => {
+  const s = PLAN.sessions[key];
+  return '<button type="button" class="chip '+(cls||'')+'" data-cat="'+s.category+'" '+(attrs||'')+'><span class="dot"></span><span>'+esc(s.title)+(sub ? ' <span class="small">'+esc(sub)+'</span>' : '')+'</span></button>';
+};
+const banner = () => S.noStorage ? '<p class="note bad">This browser is blocking saved data, so nothing you enter will be kept. Private windows do this. Open the page in a normal window.</p>' : '';
+function bandStrip(viewI){
+  const now = curIndex(), started = weekIndex(todayISO()) >= 0;
+  return '<div class="band" aria-label="Plan weeks">' + S.seq.map((w,i) => {
+    const state = !started ? '' : i < now ? ' past' : i === now ? ' now' : '';
+    return '<button type="button" class="seg'+(w.type==='easy'?' easy':'')+state+(i===viewI?' view':'')+'" data-phase="'+w.phase+'" data-act="goto" data-i="'+i+'" aria-label="Week '+w.week+'"><i></i><span>'+w.week+'</span></button>';
+  }).join('') + '</div>';
+}
+
+/* ---------- this week ---------- */
+function weekView(){
+  const i = viewIndex(), w = S.seq[i], now = curIndex(), ph = PLAN.phases[w.phase];
+  const start = weekStart(i), end = fromDay(toDay(start)+6), tg = targetsFor(i), counts = countsFor(i);
+  const today = todayISO(), wk = logsInWeek(i), lk = layoutKey(i), layout = PLAN.layouts[lk].days;
+  const dueCheck = PLAN.hip_checks.due_weeks.includes(w.week) && !w.repeat && !S.checks.some(c => weekIndex(c.date) === i);
+  const beforeStart = weekIndex(today) < 0 && i === 0;
+  let h = banner();
+  h += '<section class="hero"><div class="row between"><div class="eyebrow">'+esc(shortDate(start))+' to '+esc(shortDate(end))+(i===now && !beforeStart ? ' · this week' : '')+'</div>'+
+    '<div class="arrows"><button type="button" class="arrow" data-act="prev" aria-label="Previous week"'+(i===0?' disabled':'')+'>‹</button><button type="button" class="arrow" data-act="next" aria-label="Next week"'+(i===S.seq.length-1?' disabled':'')+'>›</button></div></div>'+
+    '<h1>Week '+w.week+' <small>of 13'+(w.repeat ? ', repeated' : '')+'</small></h1>'+
+    '<div class="phase-tag" data-phase="'+w.phase+'"><span class="swatch"></span>'+esc(ph.band)+' · '+esc(w.type==='easy' ? 'Easy week' : ph.title)+'</div>'+
+    '<p>'+esc(w.note)+' <span class="muted">Effort target '+w.effort+' out of 10.</span></p>'+bandStrip(i)+'</section>';
+  if (beforeStart) h += '<p class="note">The plan starts '+esc(fmt(start,{weekday:'long',day:'numeric',month:'long'}))+'. Change the date on the Plan tab.</p>';
+  if (backupDue()) h += '<div class="note row between"><span>Your log is saved only in this browser. Back it up so it can’t be lost.</span><button type="button" class="btn quiet" data-act="backup">Download backup</button></div>';
+  if (dueCheck) h += '<div class="note row between"><span>Hip check due this week.</span><button type="button" class="btn quiet" data-act="check-new">Take the hip check</button></div>';
+  if (w.type === 'easy' && w.phase !== 'p3') h += '<p class="note">Loads go up next week. Check the new numbers with your physio first.</p>';
+  h += '<section><h2>This week’s targets</h2><div class="targets">'+CATS.map(([k,label]) => {
+    const n = counts[k], t = tg[k];
+    return '<div class="target'+(n>=t?' met':'')+'" data-cat="'+k+'"><span class="dot"></span><span class="val">'+n+'/'+t+'</span><span class="lab">'+label+'</span></div>';
+  }).join('')+'</div></section>';
+  h += '<section><div class="row between"><h2>Suggested days</h2>';
+  if (w.type !== 'easy') h += '<button type="button" class="btn quiet" data-act="layout">'+(lk==='two_rest' ? 'Use one rest day' : 'Use two rest days')+'</button>';
+  h += '</div><p class="muted small">Move anything. Tap a session to log it, or use + to log something else that day.</p><div class="days">';
+  for (let d = 0; d < 7; d++){
+    const iso = fromDay(toDay(start)+d), dn = dayName(iso), planned = layout[dn] || [];
+    const logged = S.logs.filter(l => l.date === iso);
+    const keys = planned.concat(logged.map(l => l.session).filter(k => !planned.includes(k)));
+    const chips = keys.map(k => {
+      const attrs = 'data-act="log" data-date="'+iso+'" data-key="'+k+'"';
+      const here = logged.find(l => l.session === k && isDone(l));
+      if (here) return sessionChip(k, 'done', '✓', attrs);
+      const unique = Object.values(layout).flat().filter(x => x === k).length === 1;
+      const moved = unique && wk.find(l => l.session === k && l.date !== iso);
+      if (moved) return sessionChip(k, 'moved', 'done '+dayName(moved.date), attrs);
+      return sessionChip(k, '', '', attrs);
+    }).join('');
+    h += '<div class="day'+(iso===today?' today':'')+'"><div class="day-d"><b>'+(iso===today?'Today':dn)+'</b><span>'+esc(shortDate(iso))+'</span></div><div class="chips">'+chips+'</div><button type="button" class="add" data-act="picker" data-date="'+iso+'" aria-label="Log something else on '+esc(shortDate(iso))+'">+</button></div>';
+  }
+  h += '</div></section><section><div class="row"><button type="button" class="btn quiet" data-act="repeat">Repeat week '+w.week+' next week</button>';
+  if ((S.settings.repeats||{})[w.week]) h += '<button type="button" class="btn quiet" data-act="unrepeat">Undo repeat</button>';
+  h += '</div><p class="muted small">Holiday, illness or just not ready? A repeat moves everything after it back a week.</p></section>';
+  return h;
+}
+
+/* ---------- logging a session ---------- */
+function openEditor(date, key){
+  const found = S.logs.find(l => l.date === date && l.session === key);
+  S.edit = found ? {id:found.id, doc:clone(found), armed:false} : {id:date+'_'+key, doc:{date, session:key, ex:{}}, armed:false};
+  S.picker = null; paintSheet(); render(); window.scrollTo(0,0);
+}
+function closeEditor(){ S.edit = null; render(); window.scrollTo(0,0); }
+function exCard(id, i, doc){
+  const ex = PLAN.exercises[id], r = rxFor(id, i), e = doc.ex[id] || {}, st = stepStatus(id);
+  const hasLoad = ex.load_type !== 'none' || r.kg != null;
+  const fieldsCols = hasLoad ? '' : ' style="grid-template-columns:repeat(2,minmax(0,1fr))"';
+  let h = '<div class="ex'+(e.done?' done':'')+(e.skipped?' skipped':'')+'" id="ex-'+id+'"><h3>'+esc(ex.name)+'</h3><div class="rx">'+esc(rxText(r, ex))+'</div><p class="how">'+esc(ex.how)+'</p>';
+  if (st) h += '<p class="flag" data-level="'+STEP_TEXT[st][0]+'">'+esc(STEP_TEXT[st][1])+'</p>';
+  h += '<div class="fields"'+fieldsCols+'>';
+  if (hasLoad) h += '<label class="f">'+(ex.load_type==='band'?'Band':'Load (kg)')+'<input class="t num" id="in-'+id+'-load" data-ex="'+id+'" data-f="load" inputmode="'+(ex.load_type==='band'?'text':'decimal')+'" value="'+esc(e.load ?? '')+'" placeholder="'+esc(defaultLoad(r))+'"></label>';
+  h += '<label class="f">Sets<input class="t num" id="in-'+id+'-sets" data-ex="'+id+'" data-f="sets" inputmode="numeric" value="'+esc(e.sets ?? '')+'" placeholder="'+r.sets+'"></label>';
+  h += '<label class="f">'+(ex.unit==='s'?'Seconds':'Reps')+'<input class="t num" id="in-'+id+'-reps" data-ex="'+id+'" data-f="reps" inputmode="numeric" value="'+esc(e.reps ?? '')+'" placeholder="'+r.reps[0]+'"></label></div>';
+  h += '<div class="feel" role="group" aria-label="How it felt">'+[['easy','Easy'],['right','Right'],['hard','Hard']].map(([k,l]) =>
+    '<button type="button" data-act="feel" data-ex="'+id+'" data-feel="'+k+'" aria-pressed="'+(e.feel===k)+'">'+l+'</button>').join('')+
+    '<button type="button" data-act="skip" data-ex="'+id+'" aria-pressed="'+(!!e.skipped)+'">Skip</button></div></div>';
+  return h;
+}
+function scale(act, from, to, val, label){
+  let h = '<div class="scale" role="group" aria-label="'+label+'">';
+  for (let n = from; n <= to; n++) h += '<button type="button" data-act="'+act+'" data-v="'+n+'" aria-pressed="'+(val===n)+'">'+n+'</button>';
+  return h+'</div>';
+}
+function painFlag(p){
+  if (p == null) return '';
+  const g = PLAN.pain_guide.find(x => p <= x.max);
+  return '<p class="flag" data-level="'+g.level+'"><span><b>'+esc(g.label)+'.</b> '+esc(g.text)+'</span></p>';
+}
+function editorView(){
+  const {doc} = S.edit, s = PLAN.sessions[doc.session], cat = s.category;
+  const idx = Math.min(S.seq.length-1, Math.max(0, weekIndex(doc.date))), w = S.seq[idx];
+  const list = s.exercises ? exercisesIn(doc.session, idx) : null;
+  let h = banner()+'<div class="row between"><button type="button" class="btn quiet" data-act="back">‹ Back</button><span class="eyebrow">Week '+w.week+' · effort target '+w.effort+'/10</span></div>';
+  h += '<section><div class="row" data-cat="'+cat+'"><span class="dot"></span><span class="eyebrow">'+esc(s.subtitle)+'</span></div><h1 style="font-size:2.2rem">'+esc(s.title)+'</h1>';
+  h += '<label class="f">Date<input class="t" id="f-date" type="date" data-field="date" value="'+esc(doc.date)+'"></label>';
+  if (s.cues) h += '<p>'+esc(s.cues[cueKey(idx)])+'</p>';
+  if (list){
+    const done = list.filter(id => doc.ex[id] && doc.ex[id].done).length;
+    h += '<p class="muted small"><span id="donecount">'+done+' of '+list.length+'</span> done. About '+s.minutes+' minutes. Boxes show the plan: tap how each one felt to log it, and change a box first if you did something different.</p></section>';
+    h += '<section>'+list.map(id => exCard(id, idx, doc)).join('')+'</section>';
+  } else h += '</section>';
+  h += '<section class="panel">';
+  if (cat !== 'rest'){
+    h += '<label class="f">Minutes<input class="t num" id="f-min" data-field="minutes" inputmode="numeric" value="'+esc(doc.minutes ?? '')+'" placeholder="'+esc(s.minutes ?? '')+'"></label>';
+    h += '<div><h3>Effort, 1 to 10</h3>'+scale('effort',1,10,doc.effort,'Effort')+'</div>';
+    h += '<div><h3>Worst pain, 0 to 10</h3>'+scale('pain',0,10,doc.pain,'Pain')+'</div><div id="painflag">'+painFlag(doc.pain)+'</div>';
+    h += '<label class="f">Where was the pain?<input class="t" id="f-where" data-field="painWhere" value="'+esc(doc.painWhere ?? '')+'" placeholder="Left wrist, right hip"></label>';
+  }
+  h += '<label class="f">Notes<textarea class="t" id="f-note" data-field="note" placeholder="How it went, what you changed">'+esc(doc.note ?? '')+'</textarea></label></section>';
+  const exists = S.logs.some(l => l.id === S.edit.id);
+  h += '<div class="row"><button type="button" class="btn" data-act="finish">'+(cat==='rest'?'Log rest day':'Save session')+'</button>';
+  if (exists) h += '<button type="button" class="btn danger" data-act="delete">'+(S.edit.armed?'Tap again to delete':'Delete')+'</button>';
+  return h+'</div>';
+}
+function refreshCard(id){
+  const {doc} = S.edit, idx = Math.min(S.seq.length-1, Math.max(0, weekIndex(doc.date)));
+  const el = $('#ex-'+id); if (el) el.outerHTML = exCard(id, idx, doc);
+  const list = exercisesIn(doc.session, idx), c = $('#donecount');
+  if (c) c.textContent = list.filter(x => doc.ex[x] && doc.ex[x].done).length+' of '+list.length;
+}
+
+/* ---------- exercises ---------- */
+function exercisesView(){
+  const i = viewIndex();
+  const ids = Object.keys(PLAN.exercises).filter(id => S.filter === 'all' || PLAN.exercises[id].group === S.filter);
+  let h = banner()+'<section><h1 style="font-size:2.2rem">Exercises</h1><p class="muted">Prescriptions shown for week '+S.seq[i].week+'. Tap one for how to do it, the plan for each phase and your history.</p>';
+  h += '<div class="filters">'+[['all','All']].concat(Object.entries(PLAN.groups)).map(([k,l]) => '<button type="button" class="filter" data-act="filter" data-v="'+k+'" aria-pressed="'+(S.filter===k)+'">'+esc(l)+'</button>').join('')+'</div></section><div class="list">';
+  ids.forEach(id => {
+    const ex = PLAN.exercises[id], open = S.openEx === id, {m, pts, base} = seriesFor(id);
+    const vals = (base != null ? [base] : []).concat(pts.map(p => p.y));
+    const st = stepStatus(id);
+    h += '<div class="item"><button type="button" class="item-h" data-act="open-ex" data-id="'+id+'" aria-expanded="'+open+'"><span><b>'+esc(ex.name)+'</b><span class="rx muted">'+esc(rxText(rxFor(id,i), ex))+'</span></span>'+(sparkline(vals) || '<span class="small muted">'+(pts.length ? '1 log' : 'No logs')+'</span>')+'</button>';
+    if (st) h += '<div class="item-b"><p class="flag" data-level="'+STEP_TEXT[st][0]+'">'+esc(STEP_TEXT[st][1])+'</p></div>';
+    if (open) h += '<div class="item-b">'+exDetail(id, m, pts, base)+'</div>';
+    h += '</div>';
+  });
+  return h+'</div>';
+}
+function exDetail(id, m, pts, base){
+  const ex = PLAN.exercises[id], hist = history(id), bl = baselineText(ex);
+  let h = '<p>'+esc(ex.how)+'</p><p class="small muted">'+esc(PLAN.groups[ex.group])+(bl ? ' · Starting point: '+esc(bl) : ' · No starting load recorded')+'</p>';
+  h += '<div class="scroll"><table><thead><tr><th>Phase</th><th>Plan</th></tr></thead><tbody>'+['p1','p2','p3'].map(p =>
+    '<tr><td>'+esc(PLAN.phases[p].title)+'</td><td class="rx">'+esc(rxText(ex.rx[p], ex))+'</td></tr>').join('')+'</tbody></table></div>';
+  const series = (base != null && pts.length ? [{x:fromDay(toDay(pts[0].x)-1), y:base}] : []).concat(pts);
+  if (series.length >= 2) h += '<div><h3>'+esc(m.label)+' over time ('+esc(m.unit)+')</h3>'+lineChart(series, {title:ex.name+' '+m.label, unit:m.unit, base})+'</div>';
+  else h += '<p class="muted small">Log this twice and a chart appears here.</p>';
+  if (hist.length){
+    h += '<div class="scroll"><table><thead><tr><th>Date</th><th class="n">Load</th><th class="n">Sets</th><th class="n">'+(ex.unit==='s'?'Secs':'Reps')+'</th><th>Felt</th></tr></thead><tbody>'+hist.slice().reverse().map(x =>
+      '<tr><td>'+esc(shortDate(x.date))+'</td><td class="n">'+esc(x.load ?? '–')+'</td><td class="n">'+esc(x.sets ?? '–')+'</td><td class="n">'+esc(x.reps ?? '–')+'</td><td>'+esc(x.feel ?? '')+'</td></tr>').join('')+'</tbody></table></div>';
+  }
+  return h;
+}
+
+/* ---------- progress ---------- */
+function progressView(){
+  const now = curIndex(), done = S.logs.filter(isDone);
+  const rest = done.filter(l => l.session === 'rest').length;
+  const planned = S.seq.reduce((n,_,i) => { const t = targetsFor(i); return n + t.climb + t.skate + t.mobility + t.physio; }, 0);
+  let h = banner()+'<section><h1 style="font-size:2.2rem">Progress</h1>';
+  h += '<div class="tiles"><div class="tile"><span class="val num">'+(done.length-rest)+'<span class="small muted"> / '+planned+'</span></span><span class="lab">Sessions</span></div>'+
+    '<div class="tile"><span class="val num">'+rest+'</span><span class="lab">Rest days</span></div>'+
+    '<div class="tile"><span class="val num">'+S.checks.length+'<span class="small muted"> / '+PLAN.hip_checks.due_weeks.length+'</span></span><span class="lab">Hip checks</span></div></div></section>';
+  h += '<section><h2>Week by week</h2><div class="scroll"><table class="heat"><thead><tr><th></th>'+S.seq.map((w,i) => '<th class="'+(i===now?'now':'')+'">'+w.week+'</th>').join('')+'</tr></thead><tbody>';
+  const counts = S.seq.map((_,i) => countsFor(i));
+  CATS.forEach(([k,label]) => {
+    h += '<tr><th scope="row">'+label+'</th>'+S.seq.map((w,i) => {
+      const n = counts[i][k], t = targetsFor(i)[k], cls = n >= t && t > 0 ? 'met' : n > 0 ? 'part' : '';
+      return '<td class="'+cls+'" data-tip="'+n+' of '+t+'" data-sub="'+label+', week '+w.week+'">'+(n||'')+'</td>';
+    }).join('')+'</tr>';
+  });
+  h += '</tbody></table></div><div class="legend"><span><i></i>None yet</span><span><i class="part"></i>Some</span><span><i class="met"></i>Target met</span></div></section>';
+  h += hipChecks();
+  const pained = done.filter(l => l.pain != null).sort((a,b) => a.date < b.date ? -1 : 1);
+  if (pained.length >= 2){
+    const byDay = {}; pained.forEach(l => { byDay[l.date] = Math.max(byDay[l.date] ?? 0, l.pain); });
+    const pts = Object.entries(byDay).map(([x,y]) => ({x, y}));
+    h += '<section class="panel"><h2>Worst pain by day</h2>'+(pts.length >= 2 ? lineChart(pts, {title:'Worst pain by day', unit:'out of 10', yMin:0, yMax:10}) : '<p class="muted small">Log pain on two different days and a chart appears here.</p>')+'</section>';
+  }
+  h += '<section><h2>All sessions</h2>';
+  if (!S.logs.length) h += '<p class="muted">Nothing logged yet. Your sessions appear here once you log the first one from This week.</p>';
+  else h += '<div class="list">'+S.logs.slice(0,60).map(l => {
+    const s = PLAN.sessions[l.session]; if (!s) return '';
+    const n = Object.values(l.ex||{}).filter(e => e.done).length;
+    const bits = [s.exercises ? n+' done' : null, l.effort != null ? 'effort '+l.effort : null, l.pain != null ? 'pain '+l.pain : null].filter(Boolean).join(' · ');
+    return '<button type="button" class="logrow" data-act="log" data-date="'+esc(l.date)+'" data-key="'+esc(l.session)+'"><span class="small num">'+esc(shortDate(l.date))+'</span><span class="row" data-cat="'+s.category+'"><span class="dot"></span>'+esc(s.title)+'</span><span class="small muted">'+esc(bits)+'</span></button>';
+  }).join('')+'</div>';
+  h += '</section>'+backupPanel();
+  return h;
+}
+function backupPanel(){
+  const r = S.restore;
+  let h = '<section class="panel"><h2>Your data</h2><p class="small muted">Everything you log is saved in this browser on this device, and nowhere else. Nobody else can see it. Download a backup every couple of weeks, and use it to move your log to a new phone. '+(S.lastBackup ? 'Last backup: '+esc(shortDate(S.lastBackup))+'.' : 'No backup yet.')+'</p>';
+  h += '<div class="row"><button type="button" class="btn quiet" data-act="backup">Download backup</button><label class="btn quiet" for="restore-file">Restore a backup</label><input id="restore-file" type="file" accept=".json,application/json" hidden></div>';
+  if (r && r.error) h += '<p class="flag" data-level="critical">'+esc(r.error)+'</p>';
+  if (r && r.data) h += '<p class="note">This replaces everything on this device with the backup from '+esc(fmt(r.data.exported.slice(0,10),{day:'numeric',month:'short',year:'numeric'}))+', which holds '+r.data.logs.length+' sessions.</p><div class="row"><button type="button" class="btn danger" data-act="restore-yes">Replace what’s here</button><button type="button" class="btn quiet" data-act="restore-no">Cancel</button></div>';
+  return h+'</section>';
+}
+function hipChecks(){
+  const M = PLAN.hip_checks.measures, C = S.checks;
+  let h = '<section><div class="row between"><h2>Hip checks</h2><button type="button" class="btn quiet" data-act="check-new">Add a hip check</button></div><p class="muted small">Due in weeks '+PLAN.hip_checks.due_weeks.join(', ')+'. '+esc(PLAN.hip_checks.note)+'</p>';
+  if (S.check) h += checkForm();
+  if (C.length){
+    h += '<div class="panel scroll"><table><thead><tr><th>Measure</th>'+C.map(c => '<th class="n"><button type="button" data-act="check-edit" data-id="'+esc(c.id)+'">'+esc(shortDate(c.date))+'</button></th>').join('')+'<th class="n">Change</th></tr></thead><tbody>'+M.map(m => {
+      const vals = C.map(c => toNum((c.values||{})[m.id]));
+      const known = vals.filter(v => v != null), change = known.length >= 2 ? known[known.length-1]-known[0] : null;
+      return '<tr><td>'+esc(m.name)+' <span class="muted small">'+esc(m.unit)+'</span></td>'+vals.map(v => '<td class="n">'+(v ?? '–')+'</td>').join('')+'<td class="n">'+(change == null ? '–' : (change > 0 ? '+' : '')+Math.round(change*10)/10)+'</td></tr>';
+    }).join('')+'</tbody></table></div>';
+  } else if (!S.check) h += '<p class="muted">Your six hip measures appear here after the first check, so you can compare week 1 with week 13.</p>';
+  return h+'</section>';
+}
+function checkForm(){
+  const c = S.check;
+  return '<div class="panel"><label class="f">Date<input class="t" id="c-date" type="date" data-check="date" value="'+esc(c.date)+'"></label>'+
+    PLAN.hip_checks.measures.map(m => '<label class="f"><span><b style="color:var(--ink)">'+esc(m.name)+'</b> ('+esc(m.unit)+'). '+esc(m.how)+'</span><input class="t num" id="c-'+m.id+'" data-check-m="'+m.id+'" inputmode="'+(m.id==='pancake_reach'?'text':'decimal')+'" value="'+esc(c.values[m.id] ?? '')+'"></label>').join('')+
+    '<div class="row"><button type="button" class="btn" data-act="check-save">Save hip check</button><button type="button" class="btn quiet" data-act="check-cancel">Cancel</button>'+(c.exists ? '<button type="button" class="btn danger" data-act="check-delete">'+(c.armed?'Tap again to delete':'Delete')+'</button>' : '')+'</div></div>';
+}
+
+/* ---------- plan ---------- */
+function planView(){
+  const start = S.settings.startDate, end = fromDay(toDay(start)+S.seq.length*7-1);
+  let h = banner()+'<section><h1 style="font-size:2.2rem">The 13-week plan</h1><p>'+esc(PLAN.goal)+'</p><p class="note">'+esc(PLAN.physio_note)+'</p></section>';
+  h += '<section><h2>Phases</h2>'+bandStrip(viewIndex())+'<div class="band-key"><span><i class="swatch" data-phase="p1"></i>Tall segments are build weeks</span><span><i class="swatch" style="height:4px" data-phase="p1"></i>Thin ones are easy weeks</span></div><div class="phases">'+
+    Object.entries(PLAN.phases).map(([k,p]) => '<div class="phase" data-phase="'+k+'"><div class="phase-tag"><span class="swatch"></span>'+esc(p.band)+'</div><h3>'+esc(p.title)+'</h3><span class="eyebrow">Weeks '+esc(p.weeks)+'</span><p class="small">'+esc(p.focus)+'</p></div>').join('')+'</div></section>';
+  h += '<section><h2>Week by week</h2><div class="panel scroll"><table><thead><tr><th class="n">Wk</th><th>Starts</th><th class="n">Effort</th><th>Focus</th></tr></thead><tbody>'+S.seq.map((w,i) =>
+    '<tr><td class="n">'+w.week+'</td><td class="n">'+esc(shortDate(weekStart(i)))+'</td><td class="n">'+w.effort+'/10</td><td>'+esc(w.note)+'</td></tr>').join('')+'</tbody></table></div></section>';
+  h += '<section><h2>Week layouts</h2><p class="muted small">Suggestions only. The weekly targets are what count.</p><div class="panel scroll"><table class="layout"><thead><tr><th></th>'+Object.values(PLAN.layouts).map(l => '<th>'+esc(l.label)+'</th>').join('')+'</tr></thead><tbody>'+DAYS.map(d =>
+    '<tr><th scope="row">'+d+'</th>'+Object.values(PLAN.layouts).map(l => '<td><div class="stack">'+l.days[d].map(k => '<span data-cat="'+PLAN.sessions[k].category+'"><i class="dot"></i>'+esc(PLAN.sessions[k].title)+'</span>').join('')+'</div></td>').join('')+'</tr>').join('')+'</tbody></table></div></section>';
+  h += '<section><h2>What’s in each session</h2><div class="phases">'+['mobA','mobB','mobC','physA','physB'].map(k => {
+    const s = PLAN.sessions[k];
+    return '<div class="phase" data-cat="'+s.category+'"><h3><span class="dot"></span> '+esc(s.title)+'</h3><span class="muted small">'+esc(s.subtitle)+', about '+s.minutes+' min</span><ul class="small" style="padding-left:1.1em">'+s.exercises.map(x => '<li>'+esc(PLAN.exercises[x.id].name)+(x.phases ? ' (from week 5)' : '')+'</li>').join('')+'</ul></div>';
+  }).join('')+'</div></section>';
+  h += '<section class="rules">'+Object.values(PLAN.rules).map(r => '<div><h2>'+esc(r.title)+'</h2><ul style="margin-top:8px">'+r.items.map(x => '<li>'+esc(x)+'</li>').join('')+'</ul></div>').join('')+'</section>';
+  h += '<section><h2>Pain guide</h2>'+PLAN.pain_guide.map(g => '<p class="flag" data-level="'+g.level+'"><span><b>'+esc(g.label)+'.</b> '+esc(g.text)+'</span></p>').join('')+'</section>';
+  h += '<section class="panel"><h2>On your phone</h2><p class="small">Add this page to your home screen so it opens like an app. In Safari, tap Share, then Add to Home Screen. In Chrome, open the menu and tap Add to Home screen. This also helps your phone keep your log safe.</p></section>';
+  h += '<section class="panel"><h2>Start date</h2><p class="small muted">Currently '+esc(fmt(start,{weekday:'long',day:'numeric',month:'long',year:'numeric'}))+' to '+esc(fmt(end,{day:'numeric',month:'long',year:'numeric'}))+'. Pick a Monday.</p><div class="row"><input class="t" style="width:auto" id="start-date" type="date" value="'+esc(start)+'"><button type="button" class="btn quiet" data-act="set-start">Change start date</button></div></section>';
+  return h;
+}
+
+/* ---------- render ---------- */
+function render(){
+  document.querySelectorAll('.tab').forEach(t => { if (t.dataset.tab === S.tab && !S.edit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current'); });
+  if (S.edit){ view.innerHTML = editorView(); return; }
+  view.innerHTML = ({week:weekView, exercises:exercisesView, progress:progressView, plan:planView})[S.tab]();
+}
+function safeRender(){
+  if (S.edit) return;
+  const a = document.activeElement;
+  if (a && view.contains(a) && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)){ S.stale = true; return; }
+  render();
+}
+function paintSheet(){
+  const el = $('#sheet');
+  if (!S.picker){ el.innerHTML = ''; return; }
+  const keys = ['climb','skate','mobA','mobB','mobC','physA','physB','rest'];
+  el.innerHTML = '<div class="sheet" data-act="picker-close"><div class="sheet-in" role="dialog" aria-label="Log a session"><div class="row between"><h2>Log on '+esc(fmt(S.picker,{weekday:'short',day:'numeric',month:'short'}))+'</h2><button type="button" class="btn quiet" data-act="picker-close">Close</button></div><div class="pick">'+
+    keys.map(k => sessionChip(k, '', '', 'data-act="log" data-date="'+S.picker+'" data-key="'+k+'"')).join('')+'</div></div></div>';
+}
+function setTab(t){ S.tab = t; S.edit = null; render(); window.scrollTo(0,0); }
+
+/* ---------- events ---------- */
+function exState(id){ return S.edit.doc.ex[id] || (S.edit.doc.ex[id] = {}); }
+function onAct(act, el, e){
+  const d = el.dataset;
+  switch (act){
+    case 'prev': S.viewI = Math.max(0, viewIndex()-1); render(); break;
+    case 'next': S.viewI = Math.min(S.seq.length-1, viewIndex()+1); render(); break;
+    case 'goto': S.viewI = +d.i; S.tab = 'week'; render(); break;
+    case 'layout': {
+      const i = viewIndex(); S.settings.layouts = S.settings.layouts || {};
+      if (S.settings.layouts[i] === 'two_rest') delete S.settings.layouts[i]; else S.settings.layouts[i] = 'two_rest';
+      saveSettings(); break;
+    }
+    case 'repeat': {
+      const w = S.seq[viewIndex()].week; S.settings.repeats = S.settings.repeats || {};
+      S.settings.repeats[w] = (S.settings.repeats[w] || 0) + 1; saveSettings(); break;
+    }
+    case 'unrepeat': {
+      const w = S.seq[viewIndex()].week;
+      if (S.settings.repeats[w] > 1) S.settings.repeats[w]--; else delete S.settings.repeats[w];
+      saveSettings(); break;
+    }
+    case 'log': openEditor(d.date, d.key); break;
+    case 'picker': S.picker = d.date; paintSheet(); break;
+    case 'picker-close': if (e.target === el || el.tagName === 'BUTTON'){ S.picker = null; paintSheet(); } break;
+    case 'back': closeEditor(); break;
+    case 'feel': {
+      const id = d.ex, idx = Math.min(S.seq.length-1, Math.max(0, weekIndex(S.edit.doc.date))), r = rxFor(id, idx);
+      const cur = exState(id);
+      S.edit.doc.ex[id] = {done:true, feel:d.feel, load:cur.load ?? (defaultLoad(r) === '' ? null : defaultLoad(r)), sets:cur.sets ?? r.sets, reps:cur.reps ?? r.reps[0]};
+      saveLog(); refreshCard(id); break;
+    }
+    case 'skip': {
+      const on = !S.edit.doc.ex[d.ex]?.skipped;
+      S.edit.doc.ex[d.ex] = on ? {skipped:true} : {};
+      saveLog(); refreshCard(d.ex); break;
+    }
+    case 'effort': case 'pain': {
+      const v = +d.v, cur = S.edit.doc[act];
+      S.edit.doc[act] = cur === v ? null : v;
+      el.parentNode.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.v === S.edit.doc[act])));
+      if (act === 'pain') $('#painflag').innerHTML = painFlag(S.edit.doc.pain);
+      saveLog(); break;
+    }
+    case 'finish': saveLog(); closeEditor(); break;
+    case 'delete':
+      if (!S.edit.armed){ S.edit.armed = true; el.textContent = 'Tap again to delete'; break; }
+      S.logs = S.logs.filter(l => l.id !== S.edit.id); persist();
+      closeEditor(); break;
+    case 'filter': S.filter = d.v; S.openEx = null; render(); break;
+    case 'open-ex': S.openEx = S.openEx === d.id ? null : d.id; render(); break;
+    case 'check-new': {
+      const t = todayISO(), have = S.checks.find(c => c.date === t);
+      S.check = have ? {date:t, orig:t, values:clone(have.values||{}), exists:true} : {date:t, values:{}};
+      S.tab = 'progress'; render(); break;
+    }
+    case 'check-edit': { const c = S.checks.find(x => x.id === d.id); S.check = {date:c.date, orig:c.date, values:clone(c.values||{}), exists:true}; render(); break; }
+    case 'check-cancel': S.check = null; render(); break;
+    case 'check-save': {
+      const c = S.check;
+      S.checks = S.checks.filter(x => x.date !== c.date && x.date !== c.orig);
+      S.checks.push({id:c.date, date:c.date, values:c.values});
+      S.checks.sort((a,b) => byDateDesc(b,a));
+      S.check = null; persist(); render(); break;
+    }
+    case 'check-delete':
+      if (!S.check.armed){ S.check.armed = true; el.textContent = 'Tap again to delete'; break; }
+      S.checks = S.checks.filter(x => x.date !== S.check.orig);
+      S.check = null; persist(); render(); break;
+    case 'backup': downloadBackup(); break;
+    case 'restore-yes': applyData(Object.assign({lastBackup:todayISO()}, S.restore.data)); S.restore = null; S.viewI = null; persist(); render(); break;
+    case 'restore-no': S.restore = null; render(); break;
+    case 'set-start': {
+      const v = $('#start-date').value;
+      if (v){ S.settings.startDate = v; S.viewI = null; saveSettings(); }
+      break;
+    }
+  }
+}
+document.addEventListener('click', e => {
+  const tab = e.target.closest('[data-tab]');
+  if (tab){ setTab(tab.dataset.tab); return; }
+  const el = e.target.closest('[data-act]');
+  if (el) onAct(el.dataset.act, el, e);
+});
+view.addEventListener('input', e => {
+  const el = e.target, d = el.dataset;
+  if (d.checkM){ S.check.values[d.checkM] = el.value.trim(); return; }
+  if (d.check === 'date'){ S.check.date = el.value; return; }
+  if (!S.edit) return;
+  if (d.ex){
+    const raw = el.value.trim(), cur = exState(d.ex);
+    if (raw === '') delete cur[d.f]; else cur[d.f] = toNum(raw) ?? raw;
+    saveLog(); return;
+  }
+  if (d.field){
+    if (d.field === 'date'){ if (el.value) S.edit.doc.date = el.value; }
+    else if (d.field === 'minutes') S.edit.doc.minutes = toNum(el.value);
+    else S.edit.doc[d.field] = el.value;
+    saveLog();
+  }
+});
+view.addEventListener('change', e => { if (e.target.id === 'restore-file' && e.target.files[0]) readBackup(e.target.files[0]); });
+view.addEventListener('focusout', () => { if (S.stale){ S.stale = false; setTimeout(safeRender, 0); } });
+
+/* one tooltip for every chart point and heat cell */
+const tip = $('#tip');
+function showTip(el){
+  if (!el.dataset.tip) return;
+  tip.textContent = '';
+  const b = document.createElement('b'); b.textContent = el.dataset.tip; tip.appendChild(b);
+  if (el.dataset.sub) tip.appendChild(document.createTextNode(el.dataset.sub));
+  tip.hidden = false;
+  const r = el.getBoundingClientRect(), t = tip.getBoundingClientRect();
+  tip.style.left = Math.max(8, Math.min(innerWidth-t.width-8, r.left+r.width/2-t.width/2))+'px';
+  tip.style.top = Math.max(8, r.top-t.height-8)+'px';
+}
+const hideTip = () => { tip.hidden = true; };
+['pointerover','focusin'].forEach(n => view.addEventListener(n, e => { const el = e.target.closest('[data-tip]'); if (el) showTip(el); else hideTip(); }));
+['pointerout','focusout'].forEach(n => view.addEventListener(n, hideTip));
+
+let lastW = 0;
+addEventListener('resize', () => { const w = view.clientWidth; if (Math.abs(w-lastW) > 8){ lastW = w; safeRender(); } });
+
+/* ---------- start ---------- */
+(function init(){
+  const fromHash = location.hash.slice(1);
+  if (['week','exercises','progress','plan'].includes(fromHash)) S.tab = fromHash;
+  addEventListener('hashchange', () => { const t = location.hash.slice(1); if (['week','exercises','progress','plan'].includes(t)) setTab(t); });
+  /* the same page open in a second tab */
+  addEventListener('storage', e => { if (e.key === KEY){ loadSaved(); safeRender(); } });
+  buildSeq(); loadSaved(); render(); lastW = view.clientWidth;
+})();
+})();
+</script>
+</body>
+</html>
