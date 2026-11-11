@@ -169,8 +169,10 @@ main h1{font-size:2.4rem}
 .exs{display:grid;gap:6px}
 .ex{background:var(--surface);border-radius:10px;min-width:0;scroll-margin-top:10px}
 .ex.skipped{opacity:.65}
-.exh{display:grid;grid-template-columns:24px minmax(0,1fr) 18px;gap:10px;align-items:center;width:100%;min-height:60px;padding:10px 12px;text-align:left}
-.exm{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--line);font-size:.8125rem;font-weight:700}
+.exh{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;min-height:60px;padding:2px 4px 2px 2px}
+.tick{display:grid;place-items:center;width:48px;height:52px}
+.exm{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--muted);font-size:.875rem;font-weight:700}
+.exo{display:grid;grid-template-columns:minmax(0,1fr) 22px;gap:8px;align-items:center;width:100%;min-height:52px;padding:6px 8px 6px 0;text-align:left}
 .ex.done .exm{background:var(--good);box-shadow:none;color:#fff}
 .exn{min-width:0}
 .exn b{display:block;line-height:1.25}
@@ -770,7 +772,9 @@ function setRows(id, ex, r, e){
 function exCard(id, i, doc){
   const ex = PLAN.exercises[id], r = rxFor(id, i, doc.low), e = doc.ex[id] || {}, open = S.edit.open === id;
   const plan = rxText(Object.assign({}, r, {add:null}), ex);
-  let h = '<div class="ex'+(e.done?' done':'')+(e.skipped?' skipped':'')+'" id="ex-'+id+'"><button type="button" class="exh" data-act="ex-open" data-ex="'+id+'" aria-expanded="'+open+'"><span class="exm">'+(e.done ? '✓' : e.skipped ? '–' : '')+'</span><span class="exn"><b>'+esc(ex.name)+(isOptional(doc.session, id) ? ' <span class="opt">Optional</span>' : '')+'</b><span class="rx">'+esc(e.done ? rowsText(rowsOf(e), ex) : e.skipped ? 'Skipped' : plan)+'</span></span><span class="chev" aria-hidden="true">'+(open ? '−' : '+')+'</span></button>';
+  let h = '<div class="ex'+(e.done?' done':'')+(e.skipped?' skipped':'')+'" id="ex-'+id+'"><div class="exh">'+
+    '<button type="button" class="tick" data-act="tick" data-ex="'+id+'" aria-pressed="'+!!e.done+'" aria-label="'+esc((e.done ? 'Untick ' : 'Tick off ')+ex.name)+'"><span class="exm">'+(e.done ? '✓' : e.skipped ? '–' : '')+'</span></button>'+
+    '<button type="button" class="exo" data-act="ex-open" data-ex="'+id+'" aria-expanded="'+open+'"><span class="exn"><b>'+esc(ex.name)+(isOptional(doc.session, id) ? ' <span class="opt">Optional</span>' : '')+'</b><span class="rx">'+esc(e.done ? rowsText(rowsOf(e), ex) : e.skipped ? 'Skipped' : plan)+'</span></span><span class="chev" aria-hidden="true">'+(open ? '−' : '+')+'</span></button></div>';
   if (!open) return h+'</div>';
   const st = doc.low ? null : stepStatus(id), last = lastText(id, doc.date), start = baselineText(ex);
   h += '<div class="exb">';
@@ -780,7 +784,7 @@ function exCard(id, i, doc){
   if (hasLoad(ex, r)) h += setRows(id, ex, r, e);
   else h += '<div class="fields two"><label class="f">Sets<input class="t num" id="in-'+id+'-sets" data-ex="'+id+'" data-f="sets" inputmode="numeric" value="'+esc(e.sets ?? '')+'" placeholder="'+r.sets+'"></label>'+
     '<label class="f">'+(ex.unit==='s'?'Seconds':'Reps')+'<input class="t num" id="in-'+id+'-reps" data-ex="'+id+'" data-f="reps" inputmode="numeric" value="'+esc(e.reps ?? '')+'" placeholder="'+r.reps[0]+'"></label></div>';
-  h += '<div class="f-lab">How did it feel?</div><div class="feel" role="group" aria-label="How it felt">'+[['easy','Easy'],['right','Right'],['hard','Hard']].map(([k,l]) =>
+  h += '<div class="f-lab">How did it feel? Optional, but it lets the page tell you when to move on.</div><div class="feel" role="group" aria-label="How it felt">'+[['easy','Easy'],['right','Right'],['hard','Hard']].map(([k,l]) =>
     '<button type="button" data-act="feel" data-ex="'+id+'" data-feel="'+k+'" aria-pressed="'+(e.feel===k)+'">'+l+'</button>').join('')+
     '<button type="button" data-act="skip" data-ex="'+id+'" aria-pressed="'+(!!e.skipped)+'">Skip</button></div>';
   return h+'<details class="how"><summary>How to do it</summary><p>'+esc(ex.how)+'</p></details></div></div>';
@@ -806,7 +810,6 @@ function editorView(){
   const list = s.exercises ? listFor(doc.session, idx, doc.low) : null;
   const saved = S.logs.some(l => l.id === S.edit.id);
   const entry = (scheduleFor(idx)[doc.date] || []).find(e => e.key === doc.session);
-  if (list && S.edit.open === undefined) S.edit.open = list.find(id => unfinished(doc, id)) ?? null;
   let h = banner()+'<div class="edtop"><button type="button" class="linkbtn" data-act="back">‹ Back</button><span class="eyebrow">'+esc(fmt(doc.date,{weekday:'short',day:'numeric',month:'short'}))+'</span></div>';
   h += '<section class="edhead"><div class="titled" data-cat="'+cat+'"><span class="dot"></span><h1>'+esc(s.title)+'</h1></div>';
   const tools = [];
@@ -816,10 +819,10 @@ function editorView(){
   if (tools.length) h += '<div class="card-tools">'+tools.join('')+'</div>';
   if (s.cues) h += '<p>'+esc(doc.low ? s.low.cue : s.cues[cueKey(idx)])+'</p>';
   else h += '<p class="small muted">'+esc(doc.low ? 'The easiest version, about '+s.low.minutes+' minutes. It still counts toward the week.' : 'Effort target '+w.effort+' out of 10. '+w.note)+'</p>';
-  if (list && S.logs.length < 3) h += '<p class="small muted">Do each exercise, then tap how it felt. The grey numbers are the plan, so type over them if you did something different.</p>';
+  if (list) h += '<p class="small muted">Tick each exercise when it’s done. Tap a name for how to do it, or to record different numbers.</p>';
   if (doc.low && !saved) h += '<button type="button" class="linkbtn" data-act="log" data-date="'+esc(doc.date)+'" data-key="rest">Still too much? Make it a rest day</button>';
   h += '</section>';
-  if (list) h += '<section class="exs" id="exs">'+list.map(id => exCard(id, idx, doc)).join('')+'</section>';
+  if (list) h += '<section class="exs" id="exs">'+exsHTML(list, idx, doc)+'</section>';
   h += '<section class="panel" id="wrapup">';
   if (cat !== 'rest'){
     h += '<h2>'+(list ? 'How was it?' : 'Record your session')+'</h2>';
@@ -834,23 +837,33 @@ function editorView(){
   if (saved) h += '<button type="button" class="linkbtn danger" data-act="delete">'+(S.edit.armed?'Tap again to delete':'Delete this session')+'</button>';
   return h+'<div class="savebar"><span class="small" id="donecount">'+(list ? countText(list, doc) : '')+'</span><button type="button" class="btn" data-act="finish">'+(cat==='rest'?'Record rest day':'Save and finish')+'</button></div>';
 }
+function exsHTML(list, idx, doc){
+  const left = needed(doc.session, list).some(id => unfinished(doc, id));
+  return list.map(id => exCard(id, idx, doc)).join('')+(left ? '<button type="button" class="linkbtn" data-act="tick-all">Did it all as planned? Tick everything</button>' : '');
+}
+/* Ticking records the exercise at the plan's numbers, keeping anything she typed. */
+function markDone(id){
+  const doc = S.edit.doc, r = rxFor(id, editIndex(), doc.low), cur = exState(id), ex = PLAN.exercises[id];
+  doc.ex[id] = hasLoad(ex, r)
+    ? Object.assign({}, cur, {done:true, rows:carried(cur.rows || blankRows(r.sets), r)})
+    : Object.assign({}, cur, {done:true, sets:cur.sets ?? r.sets, reps:cur.reps ?? r.reps[0]});
+  delete doc.ex[id].skipped;
+}
 function refreshCard(id){
   const {doc} = S.edit, idx = editIndex();
   const el = $('#ex-'+id); if (el) el.outerHTML = exCard(id, idx, doc);
-  const c = $('#donecount'); if (c) c.textContent = countText(listFor(doc.session, idx, doc.low), doc);
+  const list = listFor(doc.session, idx, doc.low), c = $('#donecount');
+  if (c) c.textContent = countText(list, doc);
+  const all = $('[data-act="tick-all"]');
+  if (all && !needed(doc.session, list).some(x => unfinished(doc, x))) all.remove();
 }
-/* Redraw the list and bring the open exercise, or the wrap-up once none are left, into view. */
-function paintExs(){
+/* Redraw the list, and bring a newly opened exercise into view. */
+function paintExs(scroll){
   const {doc} = S.edit, idx = editIndex(), list = listFor(doc.session, idx, doc.low);
-  $('#exs').innerHTML = list.map(id => exCard(id, idx, doc)).join('');
+  $('#exs').innerHTML = exsHTML(list, idx, doc);
   const c = $('#donecount'); if (c) c.textContent = countText(list, doc);
-  const target = S.edit.open ? $('#ex-'+S.edit.open) : $('#wrapup');
+  const target = scroll && S.edit.open && $('#ex-'+S.edit.open);
   if (target) window.scrollTo({top:target.getBoundingClientRect().top+scrollY-10, behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
-}
-function advance(id){
-  const {doc} = S.edit, list = listFor(doc.session, editIndex(), doc.low), at = list.indexOf(id);
-  S.edit.open = list.slice(at+1).concat(list.slice(0, at)).find(x => unfinished(doc, x)) ?? null;
-  paintExs();
 }
 
 /* ---------- exercises ---------- */
@@ -1078,7 +1091,20 @@ function onAct(act, el, e){
       S.edit.doc.low = d.v === '1'; S.edit.open = undefined;
       if (S.logs.some(l => l.id === S.edit.id)) saveLog();
       view.innerHTML = editorView(); break;
-    case 'ex-open': S.edit.open = S.edit.open === d.ex ? null : d.ex; paintExs(); break;
+    case 'ex-open': S.edit.open = S.edit.open === d.ex ? null : d.ex; paintExs(true); break;
+    case 'tick': {
+      const cur = exState(d.ex), box = el.getBoundingClientRect();
+      if (cur.done){ delete cur.done; delete cur.feel; }
+      else { markDone(d.ex); burst(box.left+box.width/2, box.top+box.height/2, 12); miniCheer(pick(PLAN.praise.exercise)); }
+      saveLog(); refreshCard(d.ex); break;
+    }
+    case 'tick-all': {
+      const {doc} = S.edit, list = listFor(doc.session, editIndex(), doc.low);
+      needed(doc.session, list).filter(id => unfinished(doc, id)).forEach(markDone);
+      S.edit.open = null; saveLog(); paintExs(false);
+      const box = el.getBoundingClientRect(); burst(box.left+box.width/2, box.top, 20); miniCheer(pick(PLAN.praise.exercise));
+      break;
+    }
     case 'move': S.move = {planned:d.planned, key:d.key, cur:d.cur, i:+d.i}; paintSheet(); break;
     case 'move-to': {
       const moves = S.settings.moves = S.settings.moves || {}, id = S.move.planned+'|'+S.move.key;
@@ -1093,7 +1119,7 @@ function onAct(act, el, e){
       doc.ex[id] = hasLoad(PLAN.exercises[id], r)
         ? {done:true, feel:d.feel, rows:carried(cur.rows || blankRows(r.sets), r)}
         : {done:true, feel:d.feel, sets:cur.sets ?? r.sets, reps:cur.reps ?? r.reps[0]};
-      saveLog(); advance(id);
+      S.edit.open = null; saveLog(); paintExs(false);
       if (first){ burst(box.left+box.width/2, box.top, 14); miniCheer(pick(PLAN.praise.exercise)); }
       break;
     }
@@ -1115,7 +1141,7 @@ function onAct(act, el, e){
       const on = !S.edit.doc.ex[d.ex]?.skipped;
       S.edit.doc.ex[d.ex] = on ? {skipped:true} : {};
       saveLog();
-      if (on) advance(d.ex); else refreshCard(d.ex);
+      S.edit.open = null; paintExs(false);
       break;
     }
     case 'effort': case 'pain': {
